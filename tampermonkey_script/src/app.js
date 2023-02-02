@@ -78,8 +78,14 @@ class Content extends React.Component {
 
 function highlighter(excerpt, foundWords) {
     for (const i of foundWords) {
-        let r = new RegExp(`(${i})`, "gi");
-        excerpt = excerpt.replace(r, `<strong>$1</strong>`);
+        let r = new RegExp(
+            `${i.replace(
+                /([\^\$\.\*\+\?\|\\\/\(\)\[\]\{\}\,])/g,
+                (j) => "\\" + j
+            )}`,
+            "gi"
+        );
+        excerpt = excerpt.replace(r, (p) => `<strong>${p}</strong>`);
     }
     return excerpt;
 }
