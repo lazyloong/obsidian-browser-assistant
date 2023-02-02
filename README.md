@@ -1,5 +1,7 @@
 # obsidian-browser-assistant
 
+仅支持必应
+
 ## obsidian_plugin
 
 ### 安装
