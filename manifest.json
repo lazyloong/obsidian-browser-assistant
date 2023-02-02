@@ -1,0 +1,9 @@
+{
+    "id": "obsidian-browser-assistant",
+    "name": "Browser assistant",
+    "description": "",
+    "author": "lazyloong",
+
+    "minAppVersion": "0.11.0",
+    "version": "1.0"
+}

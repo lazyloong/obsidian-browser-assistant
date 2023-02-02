@@ -17,7 +17,7 @@ const regex = new RegExp(
 );
 let query = regex.exec(url)[1];
 console.log(GM_getValue("ba_port"));
-let post_url = "http://127.0.0.1:" + GM_getValue("ba_port") ?? "27125";
+let post_url = "http://127.0.0.1:" + (GM_getValue("ba_port") ?? "27125");
 
 let target_block = document
     .querySelector("div#b_content")
