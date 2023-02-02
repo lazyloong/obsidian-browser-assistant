@@ -1,0 +1,14 @@
+// ==UserScript==
+// @name           Obsidian 浏览器搜索助手
+// @namespace      obsidian-browser-assistant
+// @version        1.0
+// @author         lazyloong
+// @description    与 obsidian-browser-assistant 插件通信并展示数据
+// @grant          unsafeWindow
+// @match          *://cn.bing.com/search*
+// @match          *://www.bing.com/search*
+// @grant          GM_registerMenuCommand
+// @grant          GM_getValue
+// @grant          GM_setValue
+// @run-at         document-end
+// ==/UserScript==
