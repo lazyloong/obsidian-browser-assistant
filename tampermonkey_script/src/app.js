@@ -1,33 +1,59 @@
 import React from "react";
 import "./app.less";
 export default class extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = { state: "loading" };
+    }
+    switch(data) {
+        this.props.data = data;
+        this.setState({ state: "loded" });
+    }
     render() {
-        let list =
-            this.props.data.length == 0 ? (
-                <Entry flag={0} />
-            ) : (
-                this.props.data.map((p) => <Entry data={p} name={p.basename} />)
-            );
-        return (
-            <div className="Ba richrswrapper">
-                <div className="richrsrailtitle">
-                    <h2>Ob</h2>
-                </div>
-                <div className="richrsrailcontent">{list}</div>
-            </div>
-        );
+        switch (this.state.state) {
+            case "loded":
+                let list =
+                    this.props.data.length == 0 ? (
+                        <Entry flag={"无结果"} />
+                    ) : (
+                        this.props.data.map((p) => (
+                            <Entry data={p} name={p.basename} />
+                        ))
+                    );
+                return (
+                    <div className="Ba richrswrapper">
+                        <div className="richrsrailtitle">
+                            <h2>Ob</h2>
+                        </div>
+                        <div className="richrsrailcontent">{list}</div>
+                    </div>
+                );
+            case "loading":
+                return (
+                    <div className="Ba richrswrapper">
+                        <div className="richrsrailtitle">
+                            <h2>Ob</h2>
+                        </div>
+                        <div className="richrsrailcontent">
+                            <Entry flag={"加载中"} />
+                        </div>
+                    </div>
+                );
+        }
     }
 }
 
 class Entry extends React.Component {
     constructor(props) {
         super(props);
-        this.handleClick = this.handleClick.bind(this);
     }
     render() {
-        if (this.props.flag == 0) {
-            return <div className="richrsrailsuggestion">无结果</div>;
+        if (this.props.flag) {
+            return (
+                <div className="richrsrailsuggestion">{this.props.flag}</div>
+            );
         } else {
+            this.handleClick = this.handleClick.bind(this);
             let title = highlighter(
                 this.props.name,
                 this.props.data.foundWords
