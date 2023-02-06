@@ -138,7 +138,6 @@ class SampleSettingTab extends PluginSettingTab {
                     .setValue(this.plugin.settings.maxNum)
                     .onChange(async (value) => {
                         this.plugin.settings.maxNum = value;
-                        this.plugin.server.switchUsedPlugin(value);
                         await this.plugin.saveSettings();
                     })
             );
@@ -173,10 +172,10 @@ class Server {
                 let str = { ...JSON.parse(data) };
 
                 let query = decodeURIComponent(
-                        str["query"].replace(/\+/g, " ")
-                    ),
-                    result = await this.search(query),
-                    title = app.title.split(" - ")[0];
+                    str["query"].replace(/\+/g, " ")
+                );
+                let result = await this.search(query);
+                let title = app.title.split(" - ")[0];
                 result = result.map((p) => {
                     return { ...p, vault: title };
                 });
@@ -216,58 +215,51 @@ class Server {
                 ? void 0
                 : _a.view;
         searchView.setQuery(query);
-        let state = searchView.getState();
 
-        let resultDOM = searchView.dom;
-        let resultNum = -1;
-        let plugin = this.plugin;
-        let wait = async function () {
-            if (
-                resultNum == resultDOM.resultDomLookup.size ||
-                resultDOM.resultDomLookup.size >= plugin.settings.maxNum
-            ) {
-                return;
-            } else {
-                resultNum = resultDOM.resultDomLookup.size;
-                await new Promise<void>(function (resolve, reject) {
-                    setTimeout(function () {
-                        wait();
-                        resolve();
-                    }, 1000);
-                });
-            }
-        };
-        await wait();
+        let state = searchView.getState(),
+            searchQuery = searchView.searchQuery,
+            resultDOM = searchView.dom,
+            queue = searchView.queue.start().items.queue,
+            searchResult = await Promise.all(
+                queue.map(async (p) => {
+                    let c = await app.vault.cachedRead(p);
+                    return {
+                        file: p,
+                        content: c,
+                        result: searchQuery.match(p, c, searchQuery.matcher),
+                    };
+                })
+            );
+        searchResult = searchResult.filter((p) => p.result);
+        searchResult.forEach((p) => {
+            resultDOM.addResult(p.file, p.result, p.content, true);
+        });
 
-        let searchQuery = searchView.searchQuery.matcher.matchers
-            ? searchView.searchQuery.matcher.matchers.map((p) => p.text)
-            : searchView.searchQuery.matcher.text;
-        let resultMap = Array.from(resultDOM.resultDomLookup.values());
-        let result = [];
-
-        for (const i of resultMap) {
+        let result = [],
+            v = Array.from(searchView.dom.resultDomLookup.values()),
+            matcher = searchQuery.matcher.matchers
+                ? searchQuery.matcher.matchers.map((p) => p.text)
+                : [searchQuery.matcher.text];
+        for (const i of v) {
             let c = i.result.content[0],
                 p = app.metadataCache.getFileCache(i.file),
                 d = p.listItems,
                 f = p.sections,
-                pos,
-                t;
-
+                pos;
             if (state.extraContext)
                 pos = i.getMatchExtraPositions(i.content, c, d, f);
             else pos = i.getMatchMinimalPositions(i.content, c);
-            t = i.content.substr(pos[0], pos[1] - pos[0]);
             let data = {
                 basename: i.file.basename,
                 path: i.file.path,
-                foundWords: searchQuery,
-                excerpt: t,
+                foundWords: matcher,
+                excerpt: i.content.substr(pos[0], pos[1] - pos[0]),
             };
             result.push(data);
             if (result.length >= this.plugin.settings.maxNum) break;
         }
-
         searchView.setQuery("");
+        searchView.dom.emptyResults();
         return result;
     }
 
