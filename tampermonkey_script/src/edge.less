@@ -1,0 +1,56 @@
+.Ba.richrswrapper {
+    margin-top: 1em !important;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.05);
+    padding: 10px 0 5px 20px;
+    margin: -10px -20px 24px -20px;
+    width: initial;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+
+    .richrsrailtitle {
+        border-bottom: 1px solid #ddd;
+        padding: 5px 19px;
+        margin: 0 -20px;
+    }
+
+    .richrsrailcontent {
+        max-height: 40em;
+        overflow: auto;
+    }
+
+    .richrsrailsuggestion {
+        display: flex;
+        align-items: center;
+        padding: 10px 0;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 22px;
+        color: #111;
+        &:hover {
+            text-decoration: underline;
+        }
+        &:not(:last-child) {
+            border-bottom: 1px solid #ddd;
+        }
+
+        .ba-box {
+            width: 100%;
+
+            .ba-header {
+                font-size: 16px;
+                position: relative;
+                width: 100%;
+            }
+            .ba-content {
+                font-size: 12px;
+                line-height: 14px;
+                position: relative;
+                overflow: hidden;
+                max-height: 42px;
+                color: #8a8a8a;
+                width: 100%;
+            }
+        }
+    }
+}
