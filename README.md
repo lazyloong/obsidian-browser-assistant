@@ -1,17 +1,23 @@
-# obsidian-browser-assistant
+### 开发
 
-仅支持必应
+基于 wokoo 搭建
 
-## obsidian_plugin
+**基础配置**
 
-### 安装
+-   react
+-   less
+-   webpack
 
-方法一：手动下载 release 中的 `main.js`, `manifest.json`，复制到 **库目录/.obsidian/plugins/obsidian-browser-assistant** 文件夹即可
+**调试**
 
-方法二：通过 BRAT 插件安装
+在油猴编辑器界面的元数据区添加 `@require file://仓库位置\obsidian-browser-assistant\dist\app.bundle.js` 同时允许 Tampermonkey 访问文件 url
 
-## tampermonkey_script
+```shell
+npm run dev
+```
 
-### 安装
+**构建**
 
-新建油猴脚本并将 release 里的 `tampermonkey_script.js` 复制进去
+```shell
+npm run build
+```

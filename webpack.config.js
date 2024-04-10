@@ -23,6 +23,13 @@ module.exports = merge(base, {
                     },
                 },
             },
+            {
+                test: /\.svg$/,
+                use: [
+                    { loader: "svg-sprite-loader", options: {} },
+                    { loader: "svgo-loader", options: {} },
+                ],
+            },
         ],
     },
 });

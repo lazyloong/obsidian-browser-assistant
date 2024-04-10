@@ -7,6 +7,8 @@
 // @grant          unsafeWindow
 // @match          *://cn.bing.com/search*
 // @match          *://www.bing.com/search*
+// @match          *://www.google.com/search*
+// @match          *://www.google.com.hk/search*
 // @grant          GM_registerMenuCommand
 // @grant          GM_getValue
 // @grant          GM_setValue

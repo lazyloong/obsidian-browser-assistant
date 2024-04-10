@@ -1,27 +1,31 @@
-.Ba.richrswrapper {
+.obsidian-results {
     margin-top: 1em !important;
+    margin-bottom: 30px;
     box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.05);
-    padding: 10px 0 5px 20px;
-    margin: -10px -20px 24px -20px;
     width: initial;
     border-radius: 6px;
     border: 1px solid #ddd;
 
-    .richrsrailtitle {
+    strong {
+        color: #ea4335;
+    }
+
+    .title {
         border-bottom: 1px solid #ddd;
-        padding: 5px 19px;
-        margin: 0 -20px;
+        padding: 15px 15px 12px;
+        font-size: 1.5em;
     }
 
-    .richrsrailcontent {
+    .content {
         max-height: 40em;
-        overflow: auto;
+        overflow-y: auto;
+        overflow-x: hidden;
     }
 
-    .richrsrailsuggestion {
+    .suggestion {
         display: flex;
         align-items: center;
-        padding: 10px 0;
+        padding: 10px 5px;
         font-style: normal;
         font-weight: 400;
         font-size: 16px;
@@ -34,23 +38,35 @@
             border-bottom: 1px solid #ddd;
         }
 
-        .ba-box {
+        .box {
+            padding-left: 10px;
             width: 100%;
 
-            .ba-header {
+            .header {
                 font-size: 16px;
+                font-weight: bold;
                 position: relative;
                 width: 100%;
+                padding-bottom: 5px;
+
+                strong {
+                    font-weight: bold;
+                }
             }
-            .ba-content {
+            .content {
                 font-size: 12px;
-                line-height: 14px;
+                line-height: 16px;
                 position: relative;
                 overflow: hidden;
-                max-height: 42px;
+                max-height: 48px;
                 color: #8a8a8a;
                 width: 100%;
             }
         }
     }
+}
+
+.bing.obsidian-results {
+    margin-left: -20px;
+    margin-right: -20px;
 }

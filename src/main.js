@@ -1,4 +1,5 @@
-import EdgeLoader from "./edge";
+import BingLoader from "./bing";
+import GoogleLoader from "./google";
 
 GM_registerMenuCommand("切换端口", function () {
     let port = GM_getValue("ba_port");
@@ -10,15 +11,8 @@ GM_registerMenuCommand("切换端口", function () {
 });
 
 const url = window.location.href;
-const loaders = {
-    edge: new EdgeLoader(),
-};
-let loader;
-for (let key in loaders) {
-    if (loaders[key].test(url)) {
-        loader = loaders[key];
-        break;
-    }
-}
+const loaders = [new BingLoader(), new GoogleLoader()];
+
+let loader = loaders.find((loader) => loader.test(url));
 let port = GM_getValue("ba_port") ?? "51361";
 loader.load(url, port);
